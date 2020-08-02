@@ -8,6 +8,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  CLEAR_PROFILE,
 } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 
@@ -22,7 +23,7 @@ export const loadUser = () => async (dispatch) => {
       type: USER_LOADED,
       payload: res.data,
     });
-    console.log("user loaded");
+    //console.log("user loaded");
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,
@@ -41,6 +42,7 @@ export const register = ({ name, email, password }) => async (dispatch) => {
   const body = JSON.stringify({ name, email, password });
   try {
     const res = await axios.post("/api/users", body, config);
+    console.log(res);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
@@ -88,5 +90,8 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
+  });
+  dispatch({
+    type: CLEAR_PROFILE,
   });
 };
